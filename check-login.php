@@ -5,63 +5,44 @@
 </head> 
 <body> 
 <?php
-session_start();
-extract($_POST); 
-if ( strcmp($id, "")) { //아이디가 입력되었을 때
+extract($_POST);
 $flag = 0; 
-$fptr1 = fopen ("./stuinfo.dat", "r"); 
-while ( ($flag == 0) && ($line = fread($fptr1, 1024))) { 
-//아이디, 비밀번호가 있으면 flag = 1
-$usernum = explode("\n", $line); // 엔터를 기준으로 유저를 나눔, 이차원 배열로 유저 정보 저장
-for($i=0;$i<count($usernum);$i++){
-    $userinfo = explode("||", $usernum[$i]);
-    for($j=0;$j<count($userinfo);$j++){  
-       $user[$i][$j] = $userinfo[$j];
-    }
+$fptr1 = fopen ("./user.dat", "r"); 
+while ( ($flag == 0) && ($line = fgets($fptr1, 1024))) { 
+$user  = explode("||", $line);  
 
-}
-
-for($i=0;$i<count($usernum);$i++){
-      if($user[$i][0] == $id){
-        $flag = 1;
-        break;
-      }
-
-   
-
-
-  
-}
-for($i=0;$i<count($usernum);$i++){
-
-        if($user[$i][1] == $pw){      
-        $flag = 1;
-        break;
+if(!strcmp($id1, $user[0])){
+        if(!strcmp($pw1, $user[1])){
+                $flag = 1;
         }
- 
-   
-
-  
 }
-  
-
-} 
+}
 fclose ($fptr1);
+//유저 정보 파일 담기
+$fptr2 = fopen("./stuinfo.dat","r");
+$line2 = fread($fptr2, 1024);
+$stu = explode(",", $line2); // 파일에서 \n을 읽지못해 파일 전체가 $stu[0]에 저장되는 오류
+
+
 if ( $flag == 1) { //아이디가 파일에 있는 경우
- 
-        echo("<script>location.replace('./welcome.php');</script>");  
+print "{$user[2]}님 환영합니다.<br><hr>";
+
+for($i=0;$i<count($stu);$i++){
+        print"{$stu[$i]}<br>";
+}
+
+
+print " <hr><a href='./logout.php'>
+<input type='button' value='로그아웃'></a> ";  
+print " <a href='./info_modefy.php'>
+<input type='button' value='정보 수정하기'></a> ";
 
 } 
 else { //아이디가 파일에 없는 경우
         print " 로그인 정보를 확인해 주세요<br>" ;
-        print " <a href='./index.php'>
-        <input type='button' value='로그인 화면으로'></a> ";
-} 
+        print " <a href='./index.htm'>
+<input type='button' value='로그인 화면으로'></a> ";  
 } 
 
-else { 
-print "아이디가 입력되지 않았습니다.<br>" ; //아이디가 제대로 입력되지 않은 경우
-print " <a href='./index.php'>
-<input type='button' value='로그인 화면으로'></a> "; 
-} 
+fclose ($fptr2);
 ?>
