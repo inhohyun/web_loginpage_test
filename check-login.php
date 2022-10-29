@@ -25,19 +25,12 @@ $stu = explode(",", $line2); // 파일에서 \n을 읽지못해 파일 전체가
 
 
 if ( $flag == 1) { //아이디가 파일에 있는 경우
-print "{$user[2]}님 환영합니다.<br><hr>";
+        echo("<script>location.replace('./welcome.php');</script>");
 
-for($i=0;$i<count($stu);$i++){
-        print"{$stu[$i]}<br>";
+      
+
 }
 
-
-print " <hr><a href='./logout.php'>
-<input type='button' value='로그아웃'></a> ";  
-print " <a href='./info_modefy.php'>
-<input type='button' value='정보 수정하기'></a> ";
-
-} 
 else { //아이디가 파일에 없는 경우
         print " 로그인 정보를 확인해 주세요<br>" ;
         print " <a href='./index.htm'>

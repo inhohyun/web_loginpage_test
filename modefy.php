@@ -28,10 +28,7 @@ for($i=0;$i<count($stu);$i++){
 }
 
 //$stu[0]은 수정 잘되는데 다른게 수정이 안됨
-print"수정된 정보<br>";
-for($i=0;$i<count($stu);$i++){
-    print"{$stu[$i]}<br>";
-}
+echo("<script>location.replace('./welcome.php');</script>");
 fclose ($fptr2);
 print " <a href='./logout.php'>
 <input type='button' value='로그아웃'></a> ";  
